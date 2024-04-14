@@ -8,6 +8,8 @@ namespace SistemaReservaEquipamentos
         static List<Usuario> usuarios = new List<Usuario>();
         static Usuario usuarioLogado = null;
 
+        static List<Item> estoqueItens = new List<Item>(); // Lista de itens disponíveis para aluguel
+
         static void Main(string[] args)
         {
             // Inicialização do programa
@@ -19,6 +21,11 @@ namespace SistemaReservaEquipamentos
             // Adiciona alguns usuários de exemplo
             usuarios.Add(new Usuario("usuario1@example.com", "senha123"));
             usuarios.Add(new Usuario("usuario2@example.com", "senha456"));
+
+            // Adiciona alguns itens ao estoque
+            estoqueItens.Add(new Item("DataShow", 5)); // 5 DataShows disponíveis
+            estoqueItens.Add(new Item("Projetor", 3)); // 3 Projetores disponíveis
+            estoqueItens.Add(new Item("Caixa de Som", 2)); // 2 Caixas de Som disponíveis
 
             Console.WriteLine("Bem-vindo ao sistema de reserva de equipamentos audiovisuais!");
 
@@ -93,8 +100,9 @@ namespace SistemaReservaEquipamentos
             Console.WriteLine("\n=== Menu Principal ===");
             Console.WriteLine("1. Realizar Reserva");
             Console.WriteLine("2. Listar Equipamentos Disponíveis");
-            Console.WriteLine("3. Visualizar Reservas");
-            Console.WriteLine("4. Sair");
+            Console.WriteLine("3. Alugar Itens");
+            Console.WriteLine("4. Visualizar Reservas");
+            Console.WriteLine("5. Sair");
             Console.Write("Escolha uma opção: ");
 
             string opcao = Console.ReadLine();
@@ -107,9 +115,12 @@ namespace SistemaReservaEquipamentos
                     ListarEquipamentosDisponiveis();
                     break;
                 case "3":
-                    VisualizarReservas();
+                    AlugarItens();
                     break;
                 case "4":
+                    VisualizarReservas();
+                    break;
+                case "5":
                     usuarioLogado = null;
                     Console.WriteLine("Desconectado com sucesso.");
                     break;
@@ -133,11 +144,43 @@ namespace SistemaReservaEquipamentos
             // ...
         }
 
-        static void VisualizarReservas()
+        static void AlugarItens()
         {
-            // Implementar a lógica para visualizar reservas do usuário logado
-            Console.WriteLine("\n== Suas Reservas ==");
-            // ...
+            Console.WriteLine("\n== Alugar Itens ==");
+
+            // Exibe a lista de itens disponíveis para aluguel
+            Console.WriteLine("Itens Disponíveis para Aluguel:");
+            foreach (var item in estoqueItens)
+            {
+                Console.WriteLine($"- {item.Nome} ({item.QuantidadeDisponivel} disponíveis)");
+            }
+
+            // Solicita ao usuário o item a ser alugado
+            Console.Write("\nDigite o nome do item que deseja alugar: ");
+            string nomeItem = Console.ReadLine();
+
+            // Verifica se o item está disponível no estoque
+            Item itemSelecionado = estoqueItens.Find(i => i.Nome.Equals(nomeItem, StringComparison.OrdinalIgnoreCase));
+            if (itemSelecionado != null && itemSelecionado.QuantidadeDisponivel > 0)
+            {
+                // Solicita ao usuário o período de aluguel
+                Console.Write("Por quantos dias deseja alugar o item? ");
+                int periodoAluguel = Convert.ToInt32(Console.ReadLine());
+
+                // Calcula a data de devolução
+                DateTime dataDevolucao = DateTime.Now.AddDays(periodoAluguel);
+
+                // Atualiza a quantidade disponível do item no estoque
+                itemSelecionado.QuantidadeDisponivel--;
+
+                // Exibe as informações do aluguel
+                Console.WriteLine($"\nItem '{itemSelecionado.Nome}' alugado com sucesso!");
+                Console.WriteLine($"Data de devolução: {dataDevolucao.ToShortDateString()}");
+            }
+            else
+            {
+                Console.WriteLine("Item não disponível para aluguel ou nome do item inválido.");
+            }
         }
-    }
-}
+
+        static void
