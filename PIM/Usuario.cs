@@ -15,12 +15,11 @@ class Usuario
         Reservas = new List<Reserva>();
     }
 
-    public void RealizarReserva(Item item, DateTime dataInicio, DateTime dataFim)
+    public void RealizarReserva(Item item, DateTime dataInicio)
     {
         if (item.QuantidadeDisponivel > 0)
         {
-            Item i = new Item { };
-
+            DateTime dataFim = dataInicio.AddDays(1); // Calcula a data de fim como 1 dia após a data de início
             Reservas.Add(new Reserva(item, dataInicio, dataFim));
             item.AtualizarQuantidade(-1);
             Console.WriteLine("Reserva realizada com sucesso!");

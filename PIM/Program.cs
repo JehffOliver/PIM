@@ -107,14 +107,13 @@ class Program
         {
             case "1":
                 Console.WriteLine("Escolha o item desejado:");
-                usuarioLogado.ListarEquipamentosDisponiveis(estoqueItens); // Chama o método na classe Usuario
+                usuarioLogado.ListarEquipamentosDisponiveis(estoqueItens);
                 Console.Write("Digite o número do item desejado: ");
-                int indiceItem = int.Parse(Console.ReadLine()) - 1; // Lê o número do item escolhido e subtrai 1 para obter o índice correto na lista
-                Console.Write("Digite a data de início (dd/mm/aaaa): ");
-                DateTime dataInicio = DateTime.Parse(Console.ReadLine());
-                Console.Write("Digite a data de fim (dd/mm/aaaa): ");
-                DateTime dataFim = DateTime.Parse(Console.ReadLine());
-                usuarioLogado.RealizarReserva(estoqueItens[indiceItem], dataInicio, dataFim);
+                int indiceItem = int.Parse(Console.ReadLine()) - 1;
+                Item itemSelecionado = estoqueItens[indiceItem];
+                DateTime dataInicio = DateTime.Now;
+                Console.WriteLine($"Item alugado, a data de entrega será dia: {dataInicio.AddDays(1).ToString("dd/MM/yyyy")}");
+                usuarioLogado.RealizarReserva(itemSelecionado, dataInicio);
                 break;
             case "2":
                 usuarioLogado.ListarEquipamentosDisponiveis(estoqueItens);
