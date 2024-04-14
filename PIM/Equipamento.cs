@@ -10,7 +10,6 @@ namespace SistemaReservaEquipamentos
         public string Tipo { get; set; }
         public bool Disponivel { get; set; }
 
-        // Construtor para inicializar um equipamento
         public Equipamento(string nome, string tipo)
         {
             Nome = nome;
@@ -26,7 +25,6 @@ namespace SistemaReservaEquipamentos
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
 
-        // Construtor para inicializar uma reserva
         public Reserva(Equipamento equipamento, DateTime dataInicio, DateTime dataFim)
         {
             Equipamento = equipamento;
@@ -34,3 +32,17 @@ namespace SistemaReservaEquipamentos
             DataFim = dataFim;
         }
     }
+
+    // Classe para representar um usuário
+    class Usuario
+    {
+        public string Email { get; set; }
+        public string Senha { get; set; }
+
+        public Usuario(string email, string senha)
+        {
+            Email = email;
+            Senha = senha;
+        }
+    }
+}
