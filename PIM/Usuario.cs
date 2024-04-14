@@ -30,12 +30,12 @@ class Usuario
         }
     }
 
-    public void ListarEquipamentosDisponiveis(List<Item> estoqueItens)
+    public void ListarEquipamentosDisponiveis(List<Item> estoque)
     {
-        Console.WriteLine("\n== Equipamentos Disponíveis ==");
-        foreach (var item in estoqueItens)
+        Console.WriteLine("\n=== Equipamentos Disponíveis ===");
+        for (int i = 0; i < estoque.Count; i++)
         {
-            Console.WriteLine($"{item.Nome} - Quantidade Disponível: {item.QuantidadeDisponivel}");
+            Console.WriteLine($"{i + 1}. {estoque[i].Nome} - Quantidade disponível: {estoque[i].QuantidadeDisponivel}");
         }
     }
 
