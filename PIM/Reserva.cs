@@ -1,5 +1,4 @@
-﻿using SistemaReservaEquipamentos;
-using System;
+﻿using System;
 
 class Reserva
 {
