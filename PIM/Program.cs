@@ -20,10 +20,8 @@ class Program
         usuarios.Add(new Usuario("usuario1@example.com", "senha123"));
         usuarios.Add(new Usuario("usuario2@example.com", "senha456"));
 
-        // Adiciona alguns itens ao estoque
-        estoqueItens.Add(new Item("DataShow", 5)); // 5 DataShows disponíveis
-        estoqueItens.Add(new Item("Projetor", 3)); // 3 Projetores disponíveis
-        estoqueItens.Add(new Item("Caixa de Som", 2)); // 2 Caixas de Som disponíveis
+        // Adiciona os itens ao estoque com a quantidade máxima permitida (10 de cada)
+        AdicionarItensAoEstoque();
 
         Console.WriteLine("Bem-vindo ao sistema de reserva de equipamentos audiovisuais!");
 
@@ -99,26 +97,38 @@ class Program
         Console.WriteLine("1. Realizar Reserva");
         Console.WriteLine("2. Listar Equipamentos Disponíveis");
         Console.WriteLine("3. Alugar Itens");
-        Console.WriteLine("4. Visualizar Reservas");
-        Console.WriteLine("5. Sair");
+        Console.WriteLine("4. Devolução de Itens");
+        Console.WriteLine("5. Visualizar Reservas");
+        Console.WriteLine("6. Sair");
         Console.Write("Escolha uma opção: ");
 
         string opcao = Console.ReadLine();
         switch (opcao)
         {
             case "1":
-                RealizarReserva();
+                Console.WriteLine("Escolha o item desejado:");
+                usuarioLogado.ListarEquipamentosDisponiveis(estoqueItens); // Chama o método na classe Usuario
+                Console.Write("Digite o número do item desejado: ");
+                int indiceItem = int.Parse(Console.ReadLine()) - 1; // Lê o número do item escolhido e subtrai 1 para obter o índice correto na lista
+                Console.Write("Digite a data de início (dd/mm/aaaa): ");
+                DateTime dataInicio = DateTime.Parse(Console.ReadLine());
+                Console.Write("Digite a data de fim (dd/mm/aaaa): ");
+                DateTime dataFim = DateTime.Parse(Console.ReadLine());
+                usuarioLogado.RealizarReserva(estoqueItens[indiceItem], dataInicio, dataFim);
                 break;
             case "2":
-                ListarEquipamentosDisponiveis();
+                usuarioLogado.ListarEquipamentosDisponiveis(estoqueItens);
                 break;
             case "3":
-                AlugarItens();
+                usuarioLogado.AlugarItens();
                 break;
             case "4":
-                usuarioLogado.VisualizarReservas();
+                usuarioLogado.DevolucaoItens();
                 break;
             case "5":
+                usuarioLogado.VisualizarReservas();
+                break;
+            case "6":
                 usuarioLogado = null;
                 Console.WriteLine("Desconectado com sucesso.");
                 break;
@@ -128,21 +138,30 @@ class Program
         }
     }
 
-    static void RealizarReserva()
+    static void AdicionarItensAoEstoque()
     {
-        Console.WriteLine("\n== Realizar Reserva ==");
-        // Lógica para realizar reserva aqui
+        // Adiciona os itens ao estoque com a quantidade máxima permitida (10 de cada)
+        estoqueItens.Add(new Item("DataShow", 10));
+        estoqueItens.Add(new Item("Projetor", 10));
+        estoqueItens.Add(new Item("Caixa de Som", 10));
+        estoqueItens.Add(new Item("Notebook", 10));
+        estoqueItens.Add(new Item("Televisor com DVD", 10));
+        estoqueItens.Add(new Item("Telão", 10));
+        estoqueItens.Add(new Item("Microfone sem Fio", 10));
+        estoqueItens.Add(new Item("Kit de Conferência", 10));
+        estoqueItens.Add(new Item("Gravador de Áudio", 10));
+        estoqueItens.Add(new Item("Câmera de Vídeo", 10));
+        estoqueItens.Add(new Item("Mesa de Som", 10));
+        estoqueItens.Add(new Item("Tripé para Câmera", 10));
+        estoqueItens.Add(new Item("Luz de Estúdio", 10));
+        estoqueItens.Add(new Item("Chroma Key", 10));
+        estoqueItens.Add(new Item("Cabo HDMI", 10));
+        estoqueItens.Add(new Item("Adaptador VGA", 10));
+        estoqueItens.Add(new Item("Microfone de Lapela", 10));
+        estoqueItens.Add(new Item("Mesa de Corte", 10));
+        estoqueItens.Add(new Item("Lente de Zoom", 10));
+        estoqueItens.Add(new Item("Drone", 10));
     }
 
-    static void ListarEquipamentosDisponiveis()
-    {
-        Console.WriteLine("\n== Equipamentos Disponíveis ==");
-        // Lógica para listar equipamentos disponíveis aqui
-    }
-
-    static void AlugarItens()
-    {
-        Console.WriteLine("\n== Alugar Itens ==");
-        // Lógica para alugar itens aqui
-    }
+    // Métodos para as demais funcionalidades do sistema (RealizarReserva, ListarEquipamentosDisponiveis, AlugarItens, DevolucaoItens) aqui...
 }

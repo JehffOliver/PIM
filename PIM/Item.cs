@@ -9,6 +9,10 @@
         QuantidadeDisponivel = quantidadeDisponivel;
     }
 
+    public Item()
+    {
+    }
+
     public void AtualizarQuantidade(int quantidade)
     {
         QuantidadeDisponivel += quantidade;
